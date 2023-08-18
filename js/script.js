@@ -1,9 +1,9 @@
 const VALUE_EMPTY = 1;
 const VALUE_X = 2;
 const VALUE_O = 3;
-const DEFAULT_COLS = 10;
-const DEFAULT_ROWS = 10;
-const DEFAULT_CELL_SIZE = 40;
+const DEFAULT_COLS = 25;
+const DEFAULT_ROWS = 18;
+const DEFAULT_CELL_SIZE = 2.6;
 
 function Cell(x, y) {
     this.x = x;
@@ -13,11 +13,11 @@ function Cell(x, y) {
         var top = x * DEFAULT_CELL_SIZE;
         var left = y * DEFAULT_CELL_SIZE;
         var cellHtml = '<div id="cell-'+x+'-'+y+'" onclick="play('+x+','+y+')" class="cell" style="position: absolute; width: '+
-            DEFAULT_CELL_SIZE+'px; height:'+
-            DEFAULT_CELL_SIZE+'px; left:'+
-            left+'px; top:'+
-            top+'px; line-height: '+
-            DEFAULT_CELL_SIZE+'px;"></div>';
+            DEFAULT_CELL_SIZE+'rem; height:'+
+            DEFAULT_CELL_SIZE+'rem; left:'+
+            left+'rem; top:'+
+            top+'rem; line-height: '+
+            DEFAULT_CELL_SIZE+'rem;"></div>';
         return cellHtml;
     };
     
@@ -26,6 +26,7 @@ function Cell(x, y) {
         switch (this.value){
             case VALUE_X:
                 cellDiv.innerHTML = "X";
+                cellDiv.classList.add('x-class');
                 break;
             case VALUE_O:
                 cellDiv.innerHTML = "O";
@@ -74,7 +75,14 @@ function GameBoard(rows, cols, elementId) {
                 this.turn = VALUE_O;
             }
         } else {
-            alert("Cell is not empty");
+            Toastify({
+                text: "Cell is not empty",
+                offset: {
+                  x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                  y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                },
+              }).showToast();
+            // alert("Cell is not empty");
         }
     };
     
@@ -86,11 +94,13 @@ function GameBoard(rows, cols, elementId) {
         while((y + i < this.cols) && this.cells[x][y + i].value ===  cell.value){
             count++;
             i++;
+            console.log('1');
         }
         var i = 1;
         while((y - i >= 0) && this.cells[x][y - i].value ===  cell.value){
             count++;
             i++;
+            console.log('1');
         }
         this.endGame(count);
         //Vertical
@@ -99,11 +109,13 @@ function GameBoard(rows, cols, elementId) {
         while((x + i < this.rows) &&this.cells[x + i][y].value ===  cell.value){
             count++;
             i++;
+            console.log('1');
         }
         var i = 1;
         while((x - i >= 0) &&this.cells[x - i][y].value ===  cell.value){
             count++;
             i++;
+            console.log('1');
         }
         this.endGame(count);
         //Left diagonal
@@ -114,6 +126,7 @@ function GameBoard(rows, cols, elementId) {
             count++;
             i++;
             j++;
+            console.log('1');
         }
         var i = 1;
         var j = 1;
@@ -121,6 +134,7 @@ function GameBoard(rows, cols, elementId) {
             count++;
             i++;
             j++;
+            console.log('1');
         }
         this.endGame(count);
         //Right diagonal
@@ -131,6 +145,7 @@ function GameBoard(rows, cols, elementId) {
             count++;
             i++;
             j++;
+            console.log('1');
         }
         var i = 1;
         var j = 1;
@@ -138,6 +153,7 @@ function GameBoard(rows, cols, elementId) {
             count++;
             i++;
             j++;
+            console.log('1');
         }
         this.endGame(count);
     };
@@ -145,7 +161,14 @@ function GameBoard(rows, cols, elementId) {
     this.endGame = function (count) {
         if(count >= 5){
             this.isOver = true;
-            alert("You won!!!");
+            Toastify({
+                text: "You won!!!",
+                offset: {
+                  x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                  y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                },
+              }).showToast();
+            // alert("You won!!!");
         }
     };
 }
@@ -155,8 +178,16 @@ function play(x, y) {
 }
 
 function start() {
+    if (document.getElementById("game-board")) {
+        // destroy old gameboard
+        document.getElementById("game-board").remove();
+        const para = document.createElement("div");
+        para.id = "game-board";
+        document.body.appendChild(para);
+    }
     gameBoard = new GameBoard(DEFAULT_ROWS, DEFAULT_COLS, "game-board");
     gameBoard.draw();
 }
-var gameBoard;
+let gameBoard;
+
 start();

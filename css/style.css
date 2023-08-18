@@ -1,11 +1,16 @@
 #game-board{
     position: relative;
-    margin-top: 50px;
+    margin-top: 2rem;
 }
+
 .cell{
-    border: solid 1px blue;
+    border: solid 1px rgb(112, 112, 163);
     text-align: center;
-    font-size:20pt;
+    font-size: 20pt;
     cursor: pointer;
+    color: blue;
+}
+
+.x-class{
     color: red;
 }
