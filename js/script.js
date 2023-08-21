@@ -10,9 +10,9 @@ function Cell(x, y) {
     this.y = y;
     this.value = VALUE_EMPTY;
     this.getHtml = function(){
-        var top = x * DEFAULT_CELL_SIZE;
-        var left = y * DEFAULT_CELL_SIZE;
-        var cellHtml = '<div id="cell-'+x+'-'+y+'" onclick="play('+x+','+y+')" class="cell" style="position: absolute; width: '+
+        let top = x * DEFAULT_CELL_SIZE;
+        let left = y * DEFAULT_CELL_SIZE;
+        let cellHtml = '<div id="cell-'+x+'-'+y+'" onclick="play('+x+','+y+')" class="cell" style="position: absolute; width: '+
             DEFAULT_CELL_SIZE+'rem; height:'+
             DEFAULT_CELL_SIZE+'rem; left:'+
             left+'rem; top:'+
@@ -22,14 +22,17 @@ function Cell(x, y) {
     };
     
     this.draw = function () {
-        var cellDiv = document.getElementById("cell-"+x+"-"+y);
+        let cellDiv = document.getElementById("cell-"+x+"-"+y);
+        let message = document.getElementById("message");
         switch (this.value){
             case VALUE_X:
                 cellDiv.innerHTML = "X";
+                message.innerText = "O to play";
                 cellDiv.classList.add('x-class');
                 break;
             case VALUE_O:
                 cellDiv.innerHTML = "O";
+                message.innerText = "X to play";
                 break;
             default:
                 cellDiv.innerHTML = "";
