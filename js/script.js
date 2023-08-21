@@ -29,10 +29,12 @@ function Cell(x, y) {
                 cellDiv.innerHTML = "X";
                 message.innerText = "O to play";
                 cellDiv.classList.add('x-class');
+                cellDiv.classList.add('not-allowed');
                 break;
             case VALUE_O:
                 cellDiv.innerHTML = "O";
                 message.innerText = "X to play";
+                cellDiv.classList.add('not-allowed');
                 break;
             default:
                 cellDiv.innerHTML = "";
@@ -50,13 +52,13 @@ function GameBoard(rows, cols, elementId) {
     this.isOver = false;
     
     this.draw = function () {
-        var gameBoardDiv = document.getElementById(this.elementId);
+        let gameBoardDiv = document.getElementById(this.elementId);
         gameBoardDiv.innerHTML = "";
-        for(var i = 0; i < this.rows; i++){
-            var row = [];
+        for(let i = 0; i < this.rows; i++){
+            let row = [];
             this.cells.push(row);
-            for(var j = 0; j < this.cols; j++){
-                var cell = new Cell(i, j);
+            for(let j = 0; j < this.cols; j++){
+                let cell = new Cell(i, j);
                 row.push(cell);
                 gameBoardDiv.innerHTML += cell.getHtml();
             }
@@ -67,7 +69,7 @@ function GameBoard(rows, cols, elementId) {
         if(this.isOver) {
             return;
         }
-        var cell = this.cells[x][y];
+        let cell = this.cells[x][y];
         if(cell.value === VALUE_EMPTY){
             cell.value = this.turn;
             cell.draw();
@@ -90,31 +92,31 @@ function GameBoard(rows, cols, elementId) {
     };
     
     this.check = function (x, y) {
-        var cell = this.cells[x][y];
+        let cell = this.cells[x][y];
         //Horizontal
-        var count = 1;
-        var i = 1;
+        let count = 1;
+        let i = 1;
         while((y + i < this.cols) && this.cells[x][y + i].value ===  cell.value){
             count++;
             i++;
             console.log('1');
         }
-        var i = 1;
+        i = 1;
         while((y - i >= 0) && this.cells[x][y - i].value ===  cell.value){
             count++;
             i++;
             console.log('1');
         }
         this.endGame(count);
-        //Vertical
-        var count = 1;
-        var i = 1;
+        // Vertical
+        count = 1;
+        i = 1;
         while((x + i < this.rows) &&this.cells[x + i][y].value ===  cell.value){
             count++;
             i++;
             console.log('1');
         }
-        var i = 1;
+        i = 1;
         while((x - i >= 0) &&this.cells[x - i][y].value ===  cell.value){
             count++;
             i++;
@@ -122,17 +124,17 @@ function GameBoard(rows, cols, elementId) {
         }
         this.endGame(count);
         //Left diagonal
-        var count = 1;
-        var i = 1;
-        var j = 1;
+        count = 1;
+        i = 1;
+        j = 1;
         while((y + i < this.cols) && (x + i < this.rows) && this.cells[x + i][y + j].value ===  cell.value){
             count++;
             i++;
             j++;
             console.log('1');
         }
-        var i = 1;
-        var j = 1;
+        i = 1;
+        j = 1;
         while((x - i >= 0) && (y - j >= 0) && this.cells[x - i][y - j].value ===  cell.value){
             count++;
             i++;
@@ -141,17 +143,17 @@ function GameBoard(rows, cols, elementId) {
         }
         this.endGame(count);
         //Right diagonal
-        var count = 1;
-        var i = 1;
-        var j = 1;
+        count = 1;
+        i = 1;
+        j = 1;
         while((y + j < this.cols) && (x - i >= 0) && this.cells[x - i][y + j].value ===  cell.value){
             count++;
             i++;
             j++;
             console.log('1');
         }
-        var i = 1;
-        var j = 1;
+        i = 1;
+        j = 1;
         while((y - j >= 0) && (x + i < this.rows) &&this.cells[x + i][y - j].value ===  cell.value){
             count++;
             i++;

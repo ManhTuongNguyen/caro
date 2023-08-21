@@ -11,6 +11,10 @@
     color: blue;
 }
 
-.x-class{
+.x-class {
     color: red;
+}
+
+.not-allowed {
+    cursor: not-allowed;
 }
